@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_objetos",
+  "info": {
+    "displayName": "Objeto",
+    "icon": "chartCircle"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "fotos": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  },
+  "config": {}
+}

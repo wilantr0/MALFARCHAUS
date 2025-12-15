@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "objetos_colecciones",
+  "info": {
+    "singularName": "objetos-coleccion",
+    "pluralName": "objetos-colecciones",
+    "displayName": "Objetos coleccion"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "fotos": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "tallas": {
+      "type": "component",
+      "component": "shared.tallas",
+      "repeatable": true,
+      "max": 1
+    },
+    "stock": {
+      "type": "boolean"
+    }
+  }
+}
