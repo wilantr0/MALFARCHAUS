@@ -4,147 +4,159 @@ import { BlocksRenderer } from "@strapi/blocks-react-renderer"
 import { Button } from "flowbite-react"
 import { useState, useEffect } from "react"
 
-export function Reader({ data, meta }:{data:Array<object>, meta:object}) {
-  
+interface PageContent {
+  page: number
+  content: any[]
+  Imagen?: boolean
+  pgImagen?: {
+    url: string
+  }
+}
+
+interface Pagination {
+  page: number
+  pageSize: number
+  pageCount: number
+  total: number
+}
+
+interface Meta {
+  pagination: Pagination
+}
+
+interface ReaderProps {
+  data: PageContent[]
+  meta: Meta
+}
+
+export function Reader({ data, meta }: ReaderProps) {
   const [page, setPage] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
+  const lastIndex = meta.pagination.total - 1
 
-  // Detectar si es dispositivo móvil/tablet
+
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768) // md breakpoint
-    }
-    
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
     checkMobile()
-    window.addEventListener('resize', checkMobile)
-    
-    return () => window.removeEventListener('resize', checkMobile)
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
-  const nextPage = () => {
-    if (page < meta.pagination.total - 1) {
-      setPage(prev => prev + 1)
-    }
+ const nextPage = () => {
+  if (page + 2 <= lastIndex) {
+    setPage((prev) => prev + 2)
   }
+}
 
   const prevPage = () => {
-    if (page > 0) {
-      setPage(prev => prev - 1)
-    }
+  if (page - 2 >= 0) {
+    setPage((prev) => prev - 2)
   }
+}
 
-  // Para móvil/tablet: mostrar una página a la vez
+  /* =======================
+        MOBILE
+  ======================= */
+
   if (isMobile) {
+    const currentPage = data[page]
+
     return (
-      <div className="min-h-screen w-full flex flex-col items-center justify-center bg-amber-600/30 p-4">
-        {/* Contenedor de página única para móvil */}
-        <div className="w-full max-w-2xl h-[80vh] flex flex-col items-center justify-center">
-          {/* Página actual */}
-          <div className="w-full h-full p-6 bg-gradient-to-r from-neutral-50 to-amber-50 rounded-xl shadow-lg">
-            <div className="h-full overflow-y-auto pr-2">
-              <BlocksRenderer content={data[page].content} />
+      <div className="min-h-screen w-full flex flex-col items-center justify-center bg-linear-to-br from-amber-50 via-amber-100/50 to-orange-50 p-4">
+        <div className="w-full max-w-2xl h-[85vh] flex flex-col">
+          <div className="flex-1 p-8 bg-linear-to-br from-white to-amber-50/30 rounded-2xl shadow-xl border border-amber-200/50 backdrop-blur-sm">
+            <div className="h-full overflow-y-auto pr-3 prose prose-amber max-w-none prose-headings:text-amber-900 prose-p:text-gray-700 prose-p:leading-relaxed">
+              {
+                !currentPage.Imagen ?
+                <BlocksRenderer content={currentPage.content} />
+                : <img src={`http://localhost:1337${currentPage.pgImagen?.url}`} alt="" />
+              }
             </div>
-            <div className="mt-4 text-center text-amber-700">
-              {data[page].page}
+            <div className="mt-6 text-center text-sm font-medium text-amber-600">
+              Pàgina {currentPage.page}
             </div>
           </div>
         </div>
 
-        {/* Controles para móvil */}
-        <div className="flex flex-row justify-center items-center gap-6 mt-6">
-          {page === 0 ? (
-            <div className="w-24"></div>
-          ) : (
-            <Button onClick={prevPage} className="bg-amber-600 hover:bg-amber-700">
-              Prev
-            </Button>
-          )}
-          
-          <div className="text-sm text-amber-800">
-            Página {Number(data[page].page)} de {meta.pagination.total}
-          </div>
-          
-          {page === meta.pagination.total - 1 ? (
-            <div className="w-24 text-center text-amber-700 font-medium">FIN</div>
-          ) : (
-            <Button onClick={nextPage} className="bg-amber-600 hover:bg-amber-700">
-              Next
-            </Button>
-          )}
+        <div className="flex items-center justify-between w-full max-w-2xl gap-4 mt-6 px-2">
+          <Button onClick={prevPage} disabled={page === 0}>
+            Anterior
+          </Button>
+
+          <Button onClick={nextPage} disabled={page + 1 >= meta.pagination.total}>
+            Següent
+          </Button>
         </div>
       </div>
     )
   }
 
-  // Para desktop: mostrar dos páginas como originalmente
+  /* =======================
+        DESKTOP
+  ======================= */
+
+  const currentPage = data[page]
+  const next = data[page + 1]
+  const isLastSinglePage = !next && page === meta.pagination.total - 1
+
+
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-amber-600/30 p-4">
-      <div className="flex flex-row justify-center items-center w-full max-w-6xl h-[80vh]">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-linear-to-br from-amber-50 via-amber-100/50 to-orange-50 p-6">
+      <div className="flex items-stretch justify-center w-full max-w-7xl h-[85vh] gap-0">
+
         {/* Página izquierda */}
-        <div className="flex flex-col justify-between items-center w-full h-full p-6 bg-gradient-to-r from-neutral-50 to-amber-50 rounded-l-xl shadow-lg">
-          <div className="w-full h-full overflow-y-auto pr-4">
-            <BlocksRenderer content={data[page].content} />
+        <div className="flex flex-col justify-between w-full h-full p-10 bg-linear-to-br from-white to-amber-50/40 rounded-l-2xl shadow-2xl border-y border-l border-amber-200/50 backdrop-blur-sm">
+          <div className="flex-1 overflow-y-auto pr-6 prose prose-amber max-w-none prose-headings:text-amber-900 prose-p:text-gray-700 prose-p:leading-relaxed">
+            {
+              !currentPage.Imagen ?
+              <BlocksRenderer content={currentPage.content} />
+              : <img src={`http://localhost:1337${currentPage.pgImagen?.url}`} alt="" />
+            }
           </div>
-          <div className="mt-4 text-amber-700">
-            {data[page].page}
+          <div className="mt-6 text-center text-sm font-medium text-amber-600 border-t border-amber-200/30 pt-4">
+            {currentPage.page}
           </div>
         </div>
 
-        {/* Separador visual (simula lomo del libro) */}
-        <div className="h-full w-2 bg-gradient-to-b from-amber-500 to-amber-600"></div>
+        {/* Lomo */}
+        <div className="w-0.5 bg-linear-to-b from-amber-600 via-amber-700 to-amber-800 shadow-inner relative">
+          <div className="absolute inset-0 bg-linear-to-r from-black/10 to-transparent" />
+        </div>
 
-        {/* Página derecha o FIN */}
-        {page + 1 === meta.pagination.total ? (
-          <div className="flex flex-col justify-between items-center w-full h-full p-6 bg-gradient-to-l from-neutral-50 to-amber-100 rounded-r-xl shadow-lg">
+        {/* Página derecha */}
+        {next ? (
+          <div className="flex flex-col justify-between w-full h-full p-10 bg-linear-to-bl from-white to-amber-50/40 rounded-r-2xl shadow-2xl border-y border-r border-amber-200/50 backdrop-blur-sm">
+            <div className="flex-1 overflow-y-auto pl-6 prose prose-amber max-w-none prose-headings:text-amber-900 prose-p:text-gray-700 prose-p:leading-relaxed">
+              {
+                !next.Imagen ?
+                <BlocksRenderer content={next.content} />
+                : <img src={`http://localhost:1337${next.pgImagen?.url}`} alt="" />
+              }
+            </div>
+            <div className="mt-6 text-center text-sm font-medium text-amber-600 border-t border-amber-200/30 pt-4">
+              {next.page}
+            </div>
+          </div>
+        ) : isLastSinglePage ? (
+          <div className="flex flex-col justify-between w-full h-full p-10 bg-linear-to-bl from-white to-amber-50/40 rounded-r-2xl shadow-2xl border-y border-r border-amber-200/50 backdrop-blur-sm">
             <div className="flex-1 flex items-center justify-center">
               <div className="text-center">
-                <div className="text-4xl font-bold text-amber-700 mb-4">CABO</div>
-                <p className="text-amber-600">Cabo del conteniu</p>
+                <div className="text-6xl font-bold text-amber-700">FIN</div>
               </div>
             </div>
-            <div className="text-amber-700">
-              {Number(data[page].page) + 1}
-            </div>
           </div>
-        ) : (
-          <div className="flex flex-col justify-between items-center w-full h-full p-6 bg-gradient-to-l from-neutral-50 to-amber-100 rounded-r-xl shadow-lg">
-            <div className="w-full h-full overflow-y-auto pl-4">
-              <BlocksRenderer content={data[page + 1].content} />
-            </div>
-            <div className="mt-4 text-amber-700">
-              {data[page + 1].page}
-            </div>
-          </div>
-        )}
+        ) : null}
       </div>
 
-      {/* Controles de navegación */}
-      <div className="flex flex-row justify-center items-center gap-10 mt-6">
-        {page === 0 ? (
-          <Button disabled className="px-6 opacity-50">
-            Recula
-          </Button>
-        ) : (
-          <Button 
-            onClick={prevPage} 
-            className="bg-amber-600 hover:bg-amber-700 px-6"
-          >
-            Recula
-          </Button>
-        )}
-        
-        {page === meta.pagination.total - 1 ? (
-          <Button disabled className="px-6 opacity-50">
-            Abanza
-          </Button>
-        ) : (
-          <Button 
-            onClick={nextPage} 
-            className="bg-amber-600 hover:bg-amber-700 px-6"
-          >
-            Abanza
-          </Button>
-        )}
+      {/* Controles */}
+      <div className="flex items-center justify-center gap-8 mt-8">
+        <Button onClick={prevPage} disabled={page === 0}>
+          ← Recula
+        </Button>
+
+        <Button onClick={nextPage} disabled={page + 2 > lastIndex}>
+          Abanza →
+        </Button>
       </div>
     </div>
   )

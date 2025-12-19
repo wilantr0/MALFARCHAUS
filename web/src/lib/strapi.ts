@@ -19,8 +19,33 @@ export async function getHomeInfo(){
 }
 
 export async function getDiaryPages(){
-  const res = await query("paginas-diario")
-  console.log(res.meta)
+  const res = await query("paginas-diario?populate=*")
+  console.log(res.data)
   return res
+}
 
+export async function getColections(){
+  const { data, meta } = await query("coleccions?populate[objetos_coleccions][populate]=fotos")
+  console.log(data)
+  console.log(meta)
+  return { data, meta }
+}
+
+export async function getObject(documentId: string){
+  console.log(documentId)
+  const res = await query(`objetos-colecciones?filters[documentId][$eq]=${documentId}&populate=*`)
+  console.log(res)
+  return res
+}
+
+export async function getWords(){
+  const { data } = await query("palabras?fields[0]=SECCION&populate[post][fields][0]=url")
+  console.log(data)
+  return data;
+}
+
+export async function getSectionWords(section: string){
+  const { data } = await query("palabras?filters[SECCION][$eq]="+section+"&populate[post][fields][0]=url")
+  console.log(data)
+  return data;
 }

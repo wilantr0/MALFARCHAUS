@@ -27,8 +27,9 @@ export default function Header() {
   const links = [
     { href: "/diario", labelKey: "diario" },
     { href: "/colecciones", labelKey: "colecciones" },
-    { href: "/entorno", labelKey: "entorno" },
     { href: "/diccionario", labelKey: "diccionario" },
+    { href: "/entorno", labelKey: "entorno" },
+    
   ];
 
   return (

@@ -15,49 +15,31 @@
     }
   },
   "attributes": {
-    "Original": {
-      "type": "string",
+    "post": {
+      "type": "media",
       "pluginOptions": {
         "i18n": {
-          "localized": true
+          "localized": false
         }
       },
+      "multiple": false,
       "required": true,
-      "unique": true
+      "allowedTypes": [
+        "images"
+      ]
     },
-    "Traduccion": {
-      "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "required": true
-    },
-    "Capitulo": {
+    "SECCION": {
       "type": "enumeration",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       },
-      "required": true,
       "enum": [
-        "Por un pirineo digno",
-        "Transhumancia",
-        "Las recetas de la abuela"
+        "Varios",
+        "Las mias venas ",
+        "Transhumancia"
       ]
-    },
-    "color": {
-      "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
-      "default": "#000000",
-      "required": false,
-      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
     }
   }
 }

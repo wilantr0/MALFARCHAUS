@@ -4,6 +4,7 @@ import { Reader } from "@/components/Pagination";
 
 
 
+
 export default async function Home() {
   const pages = await getDiaryPages()
   console.log(pages)

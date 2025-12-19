@@ -649,6 +649,7 @@ export interface ApiObjetosColeccionObjetosColeccion
     draftAndPublish: true;
   };
   attributes: {
+    ConTalla: Schema.Attribute.Boolean;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -666,6 +667,7 @@ export interface ApiObjetosColeccionObjetosColeccion
     publishedAt: Schema.Attribute.DateTime;
     stock: Schema.Attribute.Boolean;
     tallas: Schema.Attribute.Component<'shared.tallas', true> &
+      Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
           max: 1;
@@ -712,6 +714,14 @@ export interface ApiPaginaDiarioPaginaDiario
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    Imagen: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -731,6 +741,13 @@ export interface ApiPaginaDiarioPaginaDiario
         },
         number
       >;
+    pgImagen: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -754,22 +771,6 @@ export interface ApiPalabraPalabra extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
-    Capitulo: Schema.Attribute.Enumeration<
-      ['Por un pirineo digno', 'Transhumancia', 'Las recetas de la abuela']
-    > &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    color: Schema.Attribute.String &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }> &
-      Schema.Attribute.DefaultTo<'#000000'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -778,17 +779,17 @@ export interface ApiPalabraPalabra extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::palabra.palabra'
     >;
-    Original: Schema.Attribute.String &
+    post: Schema.Attribute.Media<'images'> &
       Schema.Attribute.Required &
-      Schema.Attribute.Unique &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
-          localized: true;
+          localized: false;
         };
       }>;
     publishedAt: Schema.Attribute.DateTime;
-    Traduccion: Schema.Attribute.String &
-      Schema.Attribute.Required &
+    SECCION: Schema.Attribute.Enumeration<
+      ['Varios', 'Las mias venas ', 'Transhumancia']
+    > &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;

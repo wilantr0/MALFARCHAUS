@@ -29,11 +29,25 @@
     },
     "tallas": {
       "type": "component",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "ConTalla"
+            },
+            true
+          ]
+        }
+      },
       "component": "shared.tallas",
       "repeatable": true,
+      "required": true,
       "max": 1
     },
     "stock": {
+      "type": "boolean"
+    },
+    "ConTalla": {
       "type": "boolean"
     }
   }

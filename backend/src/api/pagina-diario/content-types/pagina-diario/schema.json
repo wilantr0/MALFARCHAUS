@@ -35,6 +35,16 @@
       },
       "required": true
     },
+    "Imagen": {
+      "type": "boolean",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "required": true,
+      "default": false
+    },
     "content": {
       "type": "blocks",
       "pluginOptions": {
@@ -42,7 +52,40 @@
           "localized": true
         }
       },
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "Imagen"
+            },
+            false
+          ]
+        }
+      },
       "required": true
+    },
+    "pgImagen": {
+      "type": "media",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "Imagen"
+            },
+            true
+          ]
+        }
+      },
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }
