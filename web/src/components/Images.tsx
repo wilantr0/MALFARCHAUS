@@ -1,8 +1,12 @@
 "use client"
 
 import { useState } from "react";
+type Foto = {
+  url: string;
+  name: string;
+};
 
-export default function Imagenes({ fotos, base }: { fotos: object[] , base: string }) {
+export default function Imagenes({ fotos, base }: { fotos: Foto[] , base: string }) {
   const [image, setImage] = useState(1)
   return (
     <div className="w-full h-fit flex flex-row justify-start items-center">
