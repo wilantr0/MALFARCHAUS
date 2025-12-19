@@ -9,7 +9,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [language, setLanguage] = useState('es'); // 'es' para Castellano, 'an' para Aragonés
 
-  const translations = {
+  const translations:object = {
     es: {
       diario: "Diario",
       colecciones: "Colecciones",

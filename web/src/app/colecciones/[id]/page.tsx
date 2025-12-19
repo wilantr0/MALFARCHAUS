@@ -5,7 +5,7 @@ import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 const { STRAPI_HOST } = process.env;
 
-export default async function PaginaObjeto({ params }) {
+export default async function PaginaObjeto({ params }: {params:any}) {
   const { id } = await params;
   console.log(id);
   const { data } = await getObject(id);
@@ -29,7 +29,7 @@ export default async function PaginaObjeto({ params }) {
       <Breadcrumbs items={breadcrumbs} />
       <div className="w-min-screen flex flex-row justify-start gap-10 m-4">
         <div className="w-1/2 h-fit flex flex-col justify-center items-end">
-          <Imagenes fotos={product.fotos} base={STRAPI_HOST} />
+          <Imagenes fotos={product.fotos} base={STRAPI_HOST?STRAPI_HOST:""} />
           <img src={`${STRAPI_HOST}${product.fotos[0].url}`} className="w-9/10" alt="" />
         </div>
         <div className="w-1/2">
@@ -71,7 +71,7 @@ export default async function PaginaObjeto({ params }) {
                 </thead>
 
                 <tbody>
-                  {listaTallas.map((talla) => (
+                  {listaTallas.map((talla: any) => (
                     <tr
                       key={talla.size}
                       className="border-b last:border-b-0 border-default hover:bg-neutral-secondary-soft/50 transition"

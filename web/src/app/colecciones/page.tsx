@@ -108,7 +108,7 @@ export default async function Colecciones() {
                 console.log(objeto);
                 return (
                   <div key={objeto.id} className="">
-                      <ProductCard name={objeto.name} imageUrl={`${STRAPI_HOST}${objeto.fotos[1].url}`} description={objeto.description} stock={objeto.stock} id={objeto.documentId} />
+                      <ProductCard name={objeto.name} imageUrl={`${STRAPI_HOST}${objeto.fotos[1].url}`} stock={objeto.stock} id={objeto.documentId} />
                   </div>
                   
                 );
