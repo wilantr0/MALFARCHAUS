@@ -4,12 +4,18 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
+type Translations = {
+  [lang: string]: {
+    [key: string]: string
+  }
+}
+
 export default function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [language, setLanguage] = useState('es'); // 'es' para Castellano, 'an' para Aragonés
 
-  const translations:object = {
+  const translations:Translations = {
     es: {
       diario: "Diario",
       colecciones: "Colecciones",
