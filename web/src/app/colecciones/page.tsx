@@ -2,8 +2,6 @@ import ProductCard from "@/components/ProductCard";
 import { getColections } from "@/lib/strapi";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
-const { STRAPI_HOST } = process.env;
-
 
 interface StrapiImageFormat {
   name: string;

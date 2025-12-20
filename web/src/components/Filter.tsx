@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react"
 
-const STRAPI_HOST = process.env.NEXT_PUBLIC_STRAPI_HOST
+const { NEXT_PUBLIC_STRAPI_HOST : STRAPI_HOST } = process.env
 
 export default function Filter({
   sections,

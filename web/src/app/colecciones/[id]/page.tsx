@@ -3,7 +3,7 @@ import Imagenes from "@/components/Images";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
-const { STRAPI_HOST } = process.env;
+const { NEXT_PUBLIC_STRAPI_HOST : STRAPI_HOST } = process.env;
 
 export default async function PaginaObjeto({ params }: {params:any}) {
   const { id } = await params;
@@ -39,7 +39,7 @@ export default async function PaginaObjeto({ params }: {params:any}) {
               <h1 className="text-3xl font-bold text-heading mb-2">
                 {product.name}
               </h1>
-              <div className="h-[2px] w-16 bg-amber-600 rounded-full" />
+              <div className="h-0.5 w-16 bg-amber-600 rounded-full" />
             </div>
 
             {/* Descripción */}
