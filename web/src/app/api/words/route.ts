@@ -1,3 +1,6 @@
+const { NEXT_PUBLIC_STRAPI_HOST } = process.env;
+
+
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const sectionsParam = searchParams.get("sections")
@@ -19,12 +22,8 @@ export async function GET(req: Request) {
     "&populate[post][fields][0]=url"
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_STRAPI_HOST}/api/${url}`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
-      },
-    }
+    `${NEXT_PUBLIC_STRAPI_HOST}/api/${url}`,
+
   )
 
   const json = await res.json()
