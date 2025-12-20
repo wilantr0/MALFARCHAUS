@@ -30,7 +30,7 @@ export default async function PaginaObjeto({ params }: {params:any}) {
       <div className="w-min-screen flex flex-row justify-start gap-10 m-4">
         <div className="w-1/2 h-fit flex flex-col justify-center items-end">
           <Imagenes fotos={product.fotos} base={STRAPI_HOST?STRAPI_HOST:""} />
-          <img src={`${STRAPI_HOST}${product.fotos[0].url}`} className="w-9/10" alt="" />
+          <img src={`${product.fotos[0].url}`} className="w-9/10" alt="" />
         </div>
         <div className="w-1/2">
           <div className="w-full lg:w-full flex flex-col gap-6">

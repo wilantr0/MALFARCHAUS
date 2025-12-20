@@ -30,7 +30,7 @@ export default function ProductCard({
         shadow-[5px_6px_19px_-5px_rgba(0,0,0,0.1)]
       ">
         {/* Imagen */}
-        <div className="w-full aspect-[4/5] overflow-hidden">
+        <div className="w-full aspect-4/5 overflow-hidden">
           <img
             src={imageUrl}
             alt={name}

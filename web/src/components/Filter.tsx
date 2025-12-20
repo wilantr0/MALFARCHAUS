@@ -81,7 +81,7 @@ export default function Filter({
         {words.map((word, index) => (
           <img
             key={index}
-            src={`${STRAPI_HOST}${word.post.url}`}
+            src={`${word.post.url}`}
             alt=""
           />
         ))}

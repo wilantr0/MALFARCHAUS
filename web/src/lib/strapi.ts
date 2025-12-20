@@ -1,10 +1,7 @@
-const { STRAPI_HOST, STRAPI_TOKEN } = process.env;
+const { NEXT_PUBLIC_STRAPI_HOST: STRAPI_HOST } = process.env;
 
 export async function query (url: string){
   const res = await fetch(`${STRAPI_HOST}/api/${url}`, {
-    headers: {
-      Authorization: `Bearer ${STRAPI_TOKEN}`
-    }
   });
   return await res.json();
 }
@@ -13,7 +10,7 @@ export async function getHomeInfo(){
   const res = await query("home?populate=cover");
   const {title, description, cover} = res.data
 
-  const image = `${STRAPI_HOST}${cover.url}`
+  const image = `${cover.url}`
   return { title, description, image };
 
 }
@@ -25,8 +22,9 @@ export async function getDiaryPages(){
 }
 
 export async function getColections(){
-  const { data, meta } = await query("coleccions?populate[objetos_coleccions][populate]=fotos")
-  console.log(data)
+  let { data, meta } = await query("coleccions?populate[objetos_coleccions][populate]=fotos")
+  data = data??[]
+  meta = meta??[]
   console.log(meta)
   return { data, meta }
 }

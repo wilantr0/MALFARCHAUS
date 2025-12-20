@@ -19,7 +19,7 @@ export async function GET(req: Request) {
     "&populate[post][fields][0]=url"
 
   const res = await fetch(
-    `${process.env.STRAPI_HOST}/api/${url}`,
+    `${process.env.NEXT_PUBLIC_STRAPI_HOST}/api/${url}`,
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
